@@ -1,0 +1,41 @@
+clean: 
+	rm -rf target
+	rm -rf tests
+	rm -rf lib
+	find . -name "*.class" -type f -delete
+
+copy-tests: clean
+	cp -R assignment-3-grader/tests .
+	cp -R assignment-3-grader/lib .
+
+regression-tests: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/regression/DeclarationTest.java tests/regression/IfElseStatementTest.java tests/regression/ProgramTest.java tests/regression/ReturnStatementTest.java tests/regression/WhileStatementTest.java 
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+if-statement-test: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/requirements/IfStatementTests.java
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+operators-test: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/requirements/OperatorsTest.java
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+output-test: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/requirements/OutputTest.java
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+select-statement-test: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/requirements/SelectStatementTest.java
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+type-test: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/requirements/TypeTests.java
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+unless-statement-test: copy-tests
+	javac -d target -cp target:lib/junit-platform-console-standalone-1.9.0.jar:. parser/Parser.java tests/requirements/UnlessStatementTest.java
+	java -jar lib/junit-platform-console-standalone-1.9.0.jar -cp target --scan-classpath
+
+build-for-grading:
+	rm -rf target
+	javac -d target compiler/Compiler.java
