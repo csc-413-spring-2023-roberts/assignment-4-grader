@@ -3,7 +3,9 @@ package tests.helpers;
 import java.util.ArrayList;
 import java.util.List;
 import lexer.ILexer;
+import lexer.Symbol;
 import lexer.Token;
+import lexer.Tokens;
 
 public class TestLexer implements ILexer {
 
@@ -30,5 +32,9 @@ public class TestLexer implements ILexer {
     } else {
       return tokens.get(index++);
     }
+  }
+
+  public Token anonymousIdentifierToken(String identifier) {
+    return new Token(-1, -1, Symbol.symbol(identifier, Tokens.Identifier));
   }
 }
